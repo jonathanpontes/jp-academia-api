@@ -9,10 +9,28 @@ public class Usuario {
     private Double peso;
     private Double altura;
     private String sexo;
+    private String email;
+    private String telefone;
     private byte[] foto;
 
     public UUID getId() {
         return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
     public void setId(UUID id) {

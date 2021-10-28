@@ -20,5 +20,7 @@ public class UsuarioEntity implements Serializable {
     private Double peso;
     private Double altura;
     private String sexo;
+    private String email;
+    private String telefone;
     private byte[] foto;
 }

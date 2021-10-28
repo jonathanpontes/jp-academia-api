@@ -18,4 +18,9 @@ public class UsuarioServiceImpl implements UsuarioService {
     public List<Usuario> findAll() {
         return repository.findAll();
     }
+
+    @Override
+    public Usuario save(Usuario usuario) {
+        return repository.save(usuario);
+    }
 }

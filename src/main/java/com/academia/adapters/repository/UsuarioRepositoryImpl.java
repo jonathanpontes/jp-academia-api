@@ -1,5 +1,6 @@
 package com.academia.adapters.repository;
 
+import com.academia.adapters.repository.entity.UsuarioEntity;
 import com.academia.application.domain.models.Usuario;
 import com.academia.application.ports.UsuarioRepository;
 import org.modelmapper.ModelMapper;
@@ -28,5 +29,11 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
                 .stream()
                 .map(usuarioEntity -> modelMapper.map(usuarioEntity, Usuario.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Usuario save(Usuario usuario) {
+        UsuarioEntity usuarioEntity = jpaRepository.save(modelMapper.map(usuario, UsuarioEntity.class));
+        return modelMapper.map(usuarioEntity, Usuario.class);
     }
 }
