@@ -1,4 +1,4 @@
-package com.algaworks.contato.adapters.controller;
+package com.academia.adapters.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.CacheManager;

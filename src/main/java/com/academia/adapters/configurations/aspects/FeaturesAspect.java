@@ -1,6 +1,6 @@
-package com.algaworks.contato.adapters.configurations.aspects;
+package com.academia.adapters.configurations.aspects;
 
-import com.algaworks.contato.adapters.configurations.annotations.FeatureAssociation;
+import com.academia.adapters.configurations.annotations.FeatureAssociation;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

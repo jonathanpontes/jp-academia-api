@@ -1,6 +1,6 @@
-package com.algaworks.contato.adapters.configurations.annotations;
+package com.academia.adapters.configurations.annotations;
 
-import com.algaworks.contato.adapters.enums.MyFeature;
+import com.academia.adapters.enums.MyFeature;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

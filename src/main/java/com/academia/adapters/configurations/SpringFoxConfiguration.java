@@ -1,4 +1,4 @@
-package com.algaworks.contato.adapters.configurations;
+package com.academia.adapters.configurations;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

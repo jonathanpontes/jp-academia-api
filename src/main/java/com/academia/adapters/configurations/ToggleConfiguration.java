@@ -1,6 +1,6 @@
-package com.algaworks.contato.adapters.configurations;
+package com.academia.adapters.configurations;
 
-import com.algaworks.contato.adapters.enums.MyFeature;
+import com.academia.adapters.enums.MyFeature;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.togglz.core.manager.EnumBasedFeatureProvider;

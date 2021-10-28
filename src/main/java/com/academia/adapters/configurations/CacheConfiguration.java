@@ -1,4 +1,4 @@
-package com.algaworks.contato.adapters.configurations;
+package com.academia.adapters.configurations;
 
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Configuration;

@@ -3,13 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.algaworks</groupId>
-	<artifactId>contato-api</artifactId>
+	<groupId>com.academia</groupId>
+	<artifactId>jp-academia-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>contato-api</name>
-	<description>Projeto exemplo</description>
+	<name>jp-academia-api</name>
+	<description>Projeto da Academia</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -174,11 +174,6 @@
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 

@@ -1,4 +1,4 @@
-package com.algaworks.contato.adapters.enums;
+package com.academia.adapters.enums;
 
 import org.togglz.core.Feature;
 import org.togglz.core.annotation.Label;

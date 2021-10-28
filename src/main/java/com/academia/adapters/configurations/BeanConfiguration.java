@@ -1,10 +1,10 @@
-package com.algaworks.contato.adapters.configurations;
+package com.academia.adapters.configurations;
 
-import com.algaworks.contato.ContatoApiApplication;
+import com.academia.AcademiaApiApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan(basePackageClasses = ContatoApiApplication.class)
+@ComponentScan(basePackageClasses = AcademiaApiApplication.class)
 public class BeanConfiguration {
 }
