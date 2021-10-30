@@ -8,19 +8,20 @@ import java.util.UUID;
 
 @Data
 @Entity
-@Table(name = "USUARIO")
-public class UsuarioEntity implements Serializable {
+@Table(name = "TB_USER")
+public class UserEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private UUID id;
-    private String nome;
-    private Double peso;
-    private Double altura;
-    private String sexo;
+    private String name;
+    private Double weight;
+    private Double height;
+    private String sex;
     private String email;
-    private String telefone;
+    private String fone;
+
     private byte[] foto;
 }

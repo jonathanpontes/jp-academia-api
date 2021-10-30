@@ -1,7 +1,7 @@
 package com.academia.adapters.controller;
 
-import com.academia.application.domain.models.Usuario;
-import com.academia.application.ports.UsuarioService;
+import com.academia.application.domain.models.User;
+import com.academia.application.ports.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,25 +10,25 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/usuarios")
-public class UsuarioController {
+@RequestMapping("/users")
+public class UserController {
 
     @Autowired
-    UsuarioService usuarioService;
+    UserService userService;
 
     @GetMapping
-    public ResponseEntity getAllUsuarios(){
+    public ResponseEntity getAllUsers(){
 
-        List<Usuario> usuarios = usuarioService.findAll();
-        return new ResponseEntity<>((usuarios), HttpStatus.OK);
+        List<User> users = userService.findAll();
+        return new ResponseEntity<>((users), HttpStatus.OK);
     }
 
     @PostMapping
     //public ResponseEntity<Usuario> sendingEmail(@RequestBody @Valid UsuarioDto usuarioDto) {
-    public ResponseEntity<Usuario> sendingEmail(@RequestBody Usuario usuario) {
+    public ResponseEntity<User> save(@RequestBody User user) {
         //Usuario usuario = new Usuario();
         //BeanUtils.copyProperties(usuarioDto, usuario);
-        return new ResponseEntity<>(usuarioService.save(usuario), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.save(user), HttpStatus.CREATED);
     }
 
 }
