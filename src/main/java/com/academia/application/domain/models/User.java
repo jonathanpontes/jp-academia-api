@@ -12,7 +12,7 @@ public class User {
     private String email;
     private String fone;
 
-    private byte[] foto;
+    private FileDomain fileDomain;
 
     public UUID getId() {
         return id;
@@ -70,11 +70,11 @@ public class User {
         this.fone = fone;
     }
 
-    public byte[] getFoto() {
-        return foto;
+    public FileDomain getFileDomain() {
+        return fileDomain;
     }
 
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
+    public void setFileDomain(FileDomain fileDomain) {
+        this.fileDomain = fileDomain;
     }
 }

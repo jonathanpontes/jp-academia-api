@@ -23,5 +23,6 @@ public class UserEntity implements Serializable {
     private String email;
     private String fone;
 
-    private byte[] foto;
+    @OneToOne
+    private FileEntity fileEntity;
 }
