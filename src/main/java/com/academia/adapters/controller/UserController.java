@@ -35,16 +35,11 @@ public class UserController {
 
         List<UserDto> usersDto = userService.findAll()
                 .stream()
-                .map(userReturned -> {
-                    UserDto userDto = modelMapper.map(userReturned, UserDto.class);
-                    userDto.setImageDownloadURL(FileHandlerDomain.getDownloadURL(userReturned.getFileDomain()));
-                    return userDto;
-                })
+                .map(userReturned -> getUserDto(userReturned))
                 .collect(Collectors.toList());
 
         return new ResponseEntity<>((usersDto), HttpStatus.OK);
     }
-
 
     @PostMapping
     public ResponseEntity<UserDto> save(@RequestParam("userString") String userString, @RequestParam("file") MultipartFile file) throws IOException {
@@ -54,14 +49,14 @@ public class UserController {
         User user = modelMapper.map(userNode, User.class);
         user.setFileDomain(new FileDomain(file));
 
-        //saved
-        User userReturned = userService.save(user);
+        //Saved and Convert to dto
+        return new ResponseEntity(getUserDto(userService.save(user)), HttpStatus.CREATED);
+    }
 
-        //Convert to dto
+    private UserDto getUserDto(User userReturned) {
         UserDto userDto = modelMapper.map(userReturned, UserDto.class);
         userDto.setImageDownloadURL(FileHandlerDomain.getDownloadURL(userReturned.getFileDomain()));
-
-        return new ResponseEntity(userDto, HttpStatus.CREATED);
+        return userDto;
     }
 
 }

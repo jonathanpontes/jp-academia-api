@@ -33,11 +33,7 @@ public class UserRepositoryImpl implements UserRepository {
 
         return jpaRepository.findAll()
                 .stream()
-                .map(userEntity -> {
-                    User userReturned = modelMapper.map(userEntity, User.class);
-                    userReturned.setFileDomain(modelMapper.map(userEntity.getFileEntity(), FileDomain.class));
-                    return userReturned;
-                })
+                .map(userEntity -> getUser(userEntity))
                 .collect(Collectors.toList());
     }
 
@@ -45,16 +41,21 @@ public class UserRepositoryImpl implements UserRepository {
     public User save(User user) {
 
         //Convert to entity class
+        UserEntity userEntity = getUserEntity(user);
+
+        //Saved and Convert to domain class
+        return getUser(jpaRepository.save(userEntity));
+    }
+
+    private UserEntity getUserEntity(User user) {
         UserEntity userEntity = modelMapper.map(user, UserEntity.class);
         userEntity.setFileEntity(modelMapper.map(user.getFileDomain(), FileEntity.class));
+        return userEntity;
+    }
 
-        //Moment saved
-        UserEntity userEntitySaved = jpaRepository.save(userEntity);
-
-        //Convert to domain class
-        User userReturned = modelMapper.map(userEntitySaved, User.class);
-        userReturned.setFileDomain(modelMapper.map(userEntitySaved.getFileEntity(), FileDomain.class));
-
+    private User getUser(UserEntity userEntity) {
+        User userReturned = modelMapper.map(userEntity, User.class);
+        userReturned.setFileDomain(modelMapper.map(userEntity.getFileEntity(), FileDomain.class));
         return userReturned;
     }
 }
