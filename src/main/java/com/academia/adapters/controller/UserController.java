@@ -1,10 +1,9 @@
 package com.academia.adapters.controller;
 
 import com.academia.adapters.dtos.UserDto;
-import com.academia.adapters.repository.entity.UserEntity;
+import com.academia.adapters.utils.FileHandlerDomain;
 import com.academia.application.domain.models.FileDomain;
 import com.academia.application.domain.models.User;
-import com.academia.application.ports.FileService;
 import com.academia.application.ports.UserService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,10 +13,8 @@ import org.modelmapper.jackson.JsonNodeValueReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
 import java.util.List;
@@ -39,36 +36,23 @@ public class UserController {
         return new ResponseEntity<>((users), HttpStatus.OK);
     }
 
-   /* @PostMapping
-    public ResponseEntity<User> save(@RequestBody User user) {
-        return new ResponseEntity<>(userService.save(user), HttpStatus.CREATED);
-    }*/
 
     @PostMapping
     public ResponseEntity<UserDto> save(@RequestParam("userString") String userString, @RequestParam("file") MultipartFile file) throws IOException {
 
-        //config to string json to class
-        modelMapper.getConfiguration().addValueReader(new JsonNodeValueReader());
-        modelMapper.getConfiguration().setSourceNameTokenizer(NameTokenizers.UNDERSCORE);
+        //Convert type and set properties
         JsonNode userNode = new ObjectMapper().readTree(userString);
-
         User user = modelMapper.map(userNode, User.class);
         user.setFileDomain(new FileDomain(file));
 
         //saved
         User userReturned = userService.save(user);
+
         //Convert to dto
         UserDto userDto = modelMapper.map(userReturned, UserDto.class);
-        userDto.setImageDownloadURL(getDownloadURL(userReturned.getFileDomain()));
+        userDto.setImageDownloadURL(FileHandlerDomain.getDownloadURL(userReturned.getFileDomain()));
 
         return new ResponseEntity(userDto, HttpStatus.CREATED);
     }
 
-    private String getDownloadURL(FileDomain fileDomain){
-
-        return ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/files/")
-                .path(fileDomain.getId())
-                .toUriString();
-    }
 }

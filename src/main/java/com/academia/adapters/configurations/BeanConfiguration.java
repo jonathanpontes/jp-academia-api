@@ -6,6 +6,8 @@ import com.academia.application.ports.UserRepository;
 import com.academia.application.services.FileServiceImpl;
 import com.academia.application.services.UserServiceImpl;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.NameTokenizers;
+import org.modelmapper.jackson.JsonNodeValueReader;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +23,13 @@ public class BeanConfiguration {
 
     @Bean
     public ModelMapper modelMapper() {
-        return new ModelMapper();
+        ModelMapper modelMapper = new ModelMapper();
+
+        // config to string json to class
+        modelMapper.getConfiguration().addValueReader(new JsonNodeValueReader());
+        modelMapper.getConfiguration().setSourceNameTokenizer(NameTokenizers.UNDERSCORE);
+
+        return modelMapper;
     }
 
     @Bean

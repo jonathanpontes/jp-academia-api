@@ -10,6 +10,5 @@ public interface FileRepository {
 
     List<FileDomain> findAll();
     FileDomain save(FileDomain fileDomain);
-
     Optional<FileDomain> findById(String id);
 }
