@@ -50,6 +50,7 @@ public class FileController {
                 .path("/files/")
                 .path(fileDomain.getId())
                 .toUriString();
+
         FileDto fileDto = new FileDto();
         fileDto.setId(fileDomain.getId());
         fileDto.setName(fileDomain.getName());

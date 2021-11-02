@@ -1,5 +1,10 @@
 package com.academia.application.domain.models;
 
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+
 public class FileDomain {
 
     private String id;
@@ -7,6 +12,23 @@ public class FileDomain {
     private String contentType;
     private Long size;
     private byte[] data;
+
+    public FileDomain(MultipartFile file) {
+
+        this.setName(StringUtils.cleanPath(file.getOriginalFilename()));
+        this.setContentType(file.getContentType());
+
+        try {
+            this.setData(file.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        this.setSize(file.getSize());
+    }
+
+    public FileDomain() {
+    }
 
     public String getId() {
         return id;

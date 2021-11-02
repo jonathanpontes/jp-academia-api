@@ -26,12 +26,7 @@ public class FileServiceImpl implements FileService {
     @Override
     public FileDomain save(MultipartFile file) throws IOException {
 
-        FileDomain fileDomain = new FileDomain();
-        fileDomain.setName(StringUtils.cleanPath(file.getOriginalFilename()));
-        fileDomain.setContentType(file.getContentType());
-        fileDomain.setData(file.getBytes());
-        fileDomain.setSize(file.getSize());
-
+        FileDomain fileDomain = new FileDomain(file);
         return fileRepository.save(fileDomain);
     }
 

@@ -1,5 +1,6 @@
 package com.academia.adapters.controller;
 
+import com.academia.adapters.dtos.UserDto;
 import com.academia.adapters.repository.entity.UserEntity;
 import com.academia.application.domain.models.FileDomain;
 import com.academia.application.domain.models.User;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
 import java.util.List;
@@ -43,23 +45,30 @@ public class UserController {
     }*/
 
     @PostMapping
-    public ResponseEntity<String> save(@RequestParam("userString") String userString, @RequestParam("file") MultipartFile file) throws IOException {
+    public ResponseEntity<UserDto> save(@RequestParam("userString") String userString, @RequestParam("file") MultipartFile file) throws IOException {
 
-
-        FileDomain fileDomain = new FileDomain();
-        fileDomain.setName(StringUtils.cleanPath(file.getOriginalFilename()));
-        fileDomain.setContentType(file.getContentType());
-        fileDomain.setData(file.getBytes());
-        fileDomain.setSize(file.getSize());
-
+        //config to string json to class
         modelMapper.getConfiguration().addValueReader(new JsonNodeValueReader());
         modelMapper.getConfiguration().setSourceNameTokenizer(NameTokenizers.UNDERSCORE);
         JsonNode userNode = new ObjectMapper().readTree(userString);
 
         User user = modelMapper.map(userNode, User.class);
+        user.setFileDomain(new FileDomain(file));
 
-        user.setFileDomain(fileDomain);
+        //saved
+        User userReturned = userService.save(user);
+        //Convert to dto
+        UserDto userDto = modelMapper.map(userReturned, UserDto.class);
+        userDto.setImageDownloadURL(getDownloadURL(userReturned.getFileDomain()));
 
-        return new ResponseEntity(userService.save(user), HttpStatus.CREATED);
+        return new ResponseEntity(userDto, HttpStatus.CREATED);
+    }
+
+    private String getDownloadURL(FileDomain fileDomain){
+
+        return ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/files/")
+                .path(fileDomain.getId())
+                .toUriString();
     }
 }
