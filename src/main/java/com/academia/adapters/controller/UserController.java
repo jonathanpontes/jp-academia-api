@@ -1,15 +1,13 @@
 package com.academia.adapters.controller;
 
 import com.academia.adapters.dtos.UserDto;
-import com.academia.adapters.utils.FileHandlerDomain;
+import com.academia.adapters.utils.FileDomainHandler;
 import com.academia.application.domain.models.FileDomain;
 import com.academia.application.domain.models.User;
 import com.academia.application.ports.UserService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.NameTokenizers;
-import org.modelmapper.jackson.JsonNodeValueReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -71,7 +69,7 @@ public class UserController {
         UserDto userDto = modelMapper.map(userReturned, UserDto.class);
 
         if (userReturned.getFileDomain() != null) {
-            userDto.setImageDownloadURL(FileHandlerDomain.getDownloadURL(userReturned.getFileDomain()));
+            userDto.setImageDownloadURL(FileDomainHandler.getDownloadURL(userReturned.getFileDomain()));
         } else {
             userDto.setImageDownloadURL("");
         }

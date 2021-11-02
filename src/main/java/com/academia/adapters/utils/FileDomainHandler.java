@@ -3,7 +3,7 @@ package com.academia.adapters.utils;
 import com.academia.application.domain.models.FileDomain;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-public class FileHandlerDomain {
+public class FileDomainHandler {
 
     public static String getDownloadURL(FileDomain fileDomain){
 
