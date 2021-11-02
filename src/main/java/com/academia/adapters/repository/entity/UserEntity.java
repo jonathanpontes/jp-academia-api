@@ -23,6 +23,7 @@ public class UserEntity implements Serializable {
     private String email;
     private String fone;
 
-    @OneToOne
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="file_id")
     private FileEntity fileEntity;
 }

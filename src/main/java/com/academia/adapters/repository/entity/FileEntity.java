@@ -1,13 +1,12 @@
 package com.academia.adapters.repository.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+import com.academia.application.domain.models.User;
+import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
+@Data
 @Entity
 @Table(name = "TB_FILES")
 public class FileEntity {
@@ -26,43 +25,4 @@ public class FileEntity {
     @Lob
     private byte[] data;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getContentType() {
-        return contentType;
-    }
-
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
-    }
-
-    public Long getSize() {
-        return size;
-    }
-
-    public void setSize(Long size) {
-        this.size = size;
-    }
-
-    public byte[] getData() {
-        return data;
-    }
-
-    public void setData(byte[] data) {
-        this.data = data;
-    }
 }

@@ -25,7 +25,7 @@ public class BeanConfiguration {
     }
 
     @Bean
-    FileServiceImpl fileServiceImpl(FileRepository fileRepository, ModelMapper modelMapper) {
-        return new FileServiceImpl(fileRepository, modelMapper);
+    FileServiceImpl fileServiceImpl(FileRepository fileRepository) {
+        return new FileServiceImpl(fileRepository);
     }
 }

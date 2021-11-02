@@ -6,7 +6,6 @@ import java.util.Optional;
 import com.academia.application.domain.models.FileDomain;
 import com.academia.application.ports.FileRepository;
 import com.academia.application.ports.FileService;
-import org.modelmapper.ModelMapper;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,11 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileServiceImpl implements FileService {
 
     private final FileRepository fileRepository;
-    private final ModelMapper modelMapper;
 
-    public FileServiceImpl(FileRepository fileRepository, ModelMapper modelMapper) {
+    public FileServiceImpl(FileRepository fileRepository) {
         this.fileRepository = fileRepository;
-        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -27,32 +24,15 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public void save(MultipartFile file) {
+    public FileDomain save(MultipartFile file) throws IOException {
 
-        modelMapper.typeMap(MultipartFile.class, FileDomain.class).addMappings(
-                mapper -> {
-                            mapper.map(mFile ->StringUtils.cleanPath(mFile.getOriginalFilename()),
-                                    FileDomain::setName);
-                            mapper.map(mFile -> {
-                                        try {
-                                            return mFile.getBytes();
-                                        } catch (IOException e) {
-                                            e.printStackTrace();
-                                        }
-                                        return null;
-                                    },
-                                    FileDomain::setData);
-                });
-
-        FileDomain fileDomain = modelMapper.map(file, FileDomain.class);
-
-        /*FileDomain fileDomain = new FileDomain();
+        FileDomain fileDomain = new FileDomain();
         fileDomain.setName(StringUtils.cleanPath(file.getOriginalFilename()));
         fileDomain.setContentType(file.getContentType());
         fileDomain.setData(file.getBytes());
-        fileDomain.setSize(file.getSize());*/
+        fileDomain.setSize(file.getSize());
 
-        fileRepository.save(fileDomain);
+        return fileRepository.save(fileDomain);
     }
 
     @Override

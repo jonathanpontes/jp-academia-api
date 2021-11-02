@@ -14,6 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -27,10 +28,9 @@ public class FileController {
     @PostMapping
     public ResponseEntity<String> save(@RequestParam("file") MultipartFile file) {
         try {
-            fileService.save(file);
+            FileDomain fileDomain = fileService.save(file);
 
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(String.format("Arquivo carregado com sucesso!: %s", file.getOriginalFilename()));
+            return new ResponseEntity<>(fileDomain.getId(), HttpStatus.CREATED);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(String.format("Não foi possivel carregar o arquivo!: %s!", file.getOriginalFilename()));
