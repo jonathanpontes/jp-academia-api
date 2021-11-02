@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -38,6 +39,15 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public Optional<User> findById(String id) {
+
+        Optional<UserEntity> userEntityOptional = jpaRepository.findById(UUID.fromString(id));
+
+        return userEntityOptional.isPresent() ?
+                Optional.of(modelMapper.map(getUser(userEntityOptional.get()), User.class)) : Optional.empty();
+    }
+
+    @Override
     public User save(User user) {
 
         //Convert to entity class
@@ -49,13 +59,17 @@ public class UserRepositoryImpl implements UserRepository {
 
     private UserEntity getUserEntity(User user) {
         UserEntity userEntity = modelMapper.map(user, UserEntity.class);
-        userEntity.setFileEntity(modelMapper.map(user.getFileDomain(), FileEntity.class));
+        if(user.getFileDomain() != null) {
+            userEntity.setFileEntity(modelMapper.map(user.getFileDomain(), FileEntity.class));
+        }
         return userEntity;
     }
 
     private User getUser(UserEntity userEntity) {
         User userReturned = modelMapper.map(userEntity, User.class);
-        userReturned.setFileDomain(modelMapper.map(userEntity.getFileEntity(), FileDomain.class));
+        if(userEntity.getFileEntity() != null) {
+            userReturned.setFileDomain(modelMapper.map(userEntity.getFileEntity(), FileDomain.class));
+        }
         return userReturned;
     }
 }

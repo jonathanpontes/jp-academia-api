@@ -42,20 +42,40 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> save(@RequestParam("userString") String userString, @RequestParam("file") MultipartFile file) throws IOException {
+    public ResponseEntity<UserDto> save(@RequestParam String userString, @RequestParam(required=false) MultipartFile file) throws IOException {
 
         //Convert type and set properties
         JsonNode userNode = new ObjectMapper().readTree(userString);
         User user = modelMapper.map(userNode, User.class);
-        user.setFileDomain(new FileDomain(file));
+
+        if(file != null){
+            user.setFileDomain(new FileDomain(file));
+        }
 
         //Saved and Convert to dto
         return new ResponseEntity(getUserDto(userService.save(user)), HttpStatus.CREATED);
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity getUser(@PathVariable String id){
+
+        if (!userService.findById(id).isPresent()) {
+            return ResponseEntity.notFound()
+                    .build();
+        }
+
+        return new ResponseEntity<>((getUserDto(userService.findById(id).get())), HttpStatus.OK);
+    }
+
     private UserDto getUserDto(User userReturned) {
         UserDto userDto = modelMapper.map(userReturned, UserDto.class);
-        userDto.setImageDownloadURL(FileHandlerDomain.getDownloadURL(userReturned.getFileDomain()));
+
+        if (userReturned.getFileDomain() != null) {
+            userDto.setImageDownloadURL(FileHandlerDomain.getDownloadURL(userReturned.getFileDomain()));
+        } else {
+            userDto.setImageDownloadURL("");
+        }
+
         return userDto;
     }
 

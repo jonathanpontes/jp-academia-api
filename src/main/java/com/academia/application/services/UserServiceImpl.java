@@ -5,6 +5,7 @@ import com.academia.application.ports.UserRepository;
 import com.academia.application.ports.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
 
@@ -22,5 +23,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(User user) {
         return repository.save(user);
+    }
+
+    @Override
+    public Optional<User> findById(String id) {
+        return repository.findById(id);
     }
 }
