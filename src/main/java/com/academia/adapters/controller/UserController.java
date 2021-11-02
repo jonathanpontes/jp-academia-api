@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
@@ -32,8 +33,16 @@ public class UserController {
     @GetMapping
     public ResponseEntity getAllUsers(){
 
-        List<User> users = userService.findAll();
-        return new ResponseEntity<>((users), HttpStatus.OK);
+        List<UserDto> usersDto = userService.findAll()
+                .stream()
+                .map(userReturned -> {
+                    UserDto userDto = modelMapper.map(userReturned, UserDto.class);
+                    userDto.setImageDownloadURL(FileHandlerDomain.getDownloadURL(userReturned.getFileDomain()));
+                    return userDto;
+                })
+                .collect(Collectors.toList());
+
+        return new ResponseEntity<>((usersDto), HttpStatus.OK);
     }
 
 

@@ -33,7 +33,11 @@ public class UserRepositoryImpl implements UserRepository {
 
         return jpaRepository.findAll()
                 .stream()
-                .map(userEntity -> modelMapper.map(userEntity, User.class))
+                .map(userEntity -> {
+                    User userReturned = modelMapper.map(userEntity, User.class);
+                    userReturned.setFileDomain(modelMapper.map(userEntity.getFileEntity(), FileDomain.class));
+                    return userReturned;
+                })
                 .collect(Collectors.toList());
     }
 
