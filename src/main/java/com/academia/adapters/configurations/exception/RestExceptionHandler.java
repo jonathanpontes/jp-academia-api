@@ -1,18 +1,17 @@
-package com.academia.adapters.utils;
+package com.academia.adapters.configurations.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-@ControllerAdvice
-public class RestExceptionHandler extends ResponseEntityExceptionHandler {
+@RestControllerAdvice
+public class RestExceptionHandler {
 
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     public ResponseEntity<String> handleMaxSizeException(MaxUploadSizeExceededException exc) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body("Não foi possivel fazer o upload. O arquivo é maior que o tamanho permitido!");
+                .body("Erro ao salvar. Arquivo é maior que o tamanho permitido!");
     }
 }

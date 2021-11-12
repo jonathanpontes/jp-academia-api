@@ -9,7 +9,6 @@ import java.util.Optional;
 public interface FileService {
 
     List<FileDomain> getAllFiles();
-
-    void save(MultipartFile file) throws IOException;
+    FileDomain save(MultipartFile file) throws IOException;
     Optional<FileDomain> getFile(String id);
 }
